@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Proekt</string>
+    <string name="Heading">AquaPot-Systems</string>
+    <string name="Humidity">Humidity: %</string>
+    <string name="MinHumidity">Set min-Humidity %:</string>
+    <string name="WaterLevel">Water Level state:</string>
+    <string name="ButtonOpen">Gui View</string>
+    <string name="SignOut">Sign Out</string>
+    <string name="showHumidity">0%</string>
 </resources>

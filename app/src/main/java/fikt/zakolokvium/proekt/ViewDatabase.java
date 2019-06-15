@@ -1,5 +1,6 @@
 package fikt.zakolokvium.proekt;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -30,6 +31,9 @@ import java.util.ArrayList;
 
 public class ViewDatabase extends AppCompatActivity {
 
+    private NotificationManagerCompat notificationManager;
+
+
     private final String CHANNEL_ID="per_not";
     private final int NOTIFICATION_ID=001;
 
@@ -54,7 +58,7 @@ public class ViewDatabase extends AppCompatActivity {
 
         mListView = (ListView) findViewById(R.id.listview);
 
-
+    notificationManager=NotificationManagerCompat.from(this);
 
         //declare the database reference object. This is what we use to access the database.
         //NOTE: Unless you are signed in, this will not be useable.
@@ -120,23 +124,27 @@ public class ViewDatabase extends AppCompatActivity {
 
             if(num1<30)
             {
-                NotificationCompat.Builder builder=new NotificationCompat.Builder(this,CHANNEL_ID);
-                builder.setSmallIcon(R.drawable.humidity2);
-                builder.setContentTitle("Title not");
-                builder.setContentText("test tex");
-                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-                NotificationManagerCompat notificationManagerCompat= NotificationManagerCompat.from(this);
-                notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
-
-
+                notification();
 
 
                 toastMessage("Humidity state is low: " + num1);
-                toastMessage("Check the water tank");
+              //  toastMessage("Check the water tank");
 
             }}
     }
+
+    private void notification() {
+
+        Notification notification=new NotificationCompat.Builder(this,CHANNEL_ID)
+                .setSmallIcon(R.drawable.humidity2)
+                .setContentTitle("Title")
+                .setContentText("This is it")
+                .build();
+
+        notificationManager.notify(1,notification);
+    }
+
+
 
     @Override
     public void onStart() {

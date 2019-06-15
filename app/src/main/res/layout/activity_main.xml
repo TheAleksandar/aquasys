@@ -67,6 +67,35 @@
                 android:text="View Database Contents"
                 android:textStyle="bold"/>
 
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="336dp"
+                android:layout_height="63dp"
+                android:layout_marginTop="8dp"
+
+                />
+            <Button
+                android:id="@+id/sign_out"
+                android:layout_width="327dp"
+                android:layout_height="60dp"
+
+                android:layout_marginTop="26dp"
+
+                android:text="@string/SignOut"
+                android:visibility="gone"
+                 />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="157dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="136dp"
+                android:layout_marginTop="40dp"
+                android:onClick="openSystemGui"
+                android:text="@string/ButtonOpen"
+                android:visibility="gone"/>
+
+
 
         </LinearLayout>
     </ScrollView>
