@@ -91,17 +91,26 @@ public class ViewDatabase extends AppCompatActivity {
             uInfo.setPhone_num(ds.child(userID).getValue(UserInformation.class).getPhone_num()); //set the phone_num
 
             //display all the information
-            Log.d(TAG, "showData: name: " + uInfo.getName());
-            Log.d(TAG, "showData: email: " + uInfo.getEmail());
-            Log.d(TAG, "showData: phone_num: " + uInfo.getPhone_num());
+            Log.d(TAG, "showData: Humidity: " + uInfo.getName());
+            Log.d(TAG, "showData: Water Level: " + uInfo.getEmail());
+            Log.d(TAG, "showData: Sensor ID: " + uInfo.getPhone_num());
 
             ArrayList<String> array  = new ArrayList<>();
-            array.add(uInfo.getName());
-            array.add(uInfo.getEmail());
-            array.add(uInfo.getPhone_num());
+            array.add("Humidity:     "+ uInfo.getName()+"%");
+            array.add("Water Level:  "+uInfo.getEmail());
+            array.add("System ID:    "+uInfo.getPhone_num());
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,array);
             mListView.setAdapter(adapter);
-        }
+
+            int num1=Integer.parseInt(uInfo.getName());
+
+            if(num1<30)
+            {
+
+                toastMessage("Humidity state is low: " + num1);
+                toastMessage("Check the water tank");
+
+            }}
     }
 
     @Override
