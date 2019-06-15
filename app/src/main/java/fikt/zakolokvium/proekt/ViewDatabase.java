@@ -1,8 +1,13 @@
 package fikt.zakolokvium.proekt;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -24,6 +29,13 @@ import java.util.ArrayList;
  */
 
 public class ViewDatabase extends AppCompatActivity {
+
+    private final String CHANNEL_ID="per_not";
+    private final int NOTIFICATION_ID=001;
+
+
+
+
     private static final String TAG = "ViewDatabase";
 
     //add Firebase Database stuff
@@ -41,6 +53,8 @@ public class ViewDatabase extends AppCompatActivity {
         setContentView(R.layout.view_database_layout);
 
         mListView = (ListView) findViewById(R.id.listview);
+
+
 
         //declare the database reference object. This is what we use to access the database.
         //NOTE: Unless you are signed in, this will not be useable.
@@ -106,6 +120,17 @@ public class ViewDatabase extends AppCompatActivity {
 
             if(num1<30)
             {
+                NotificationCompat.Builder builder=new NotificationCompat.Builder(this,CHANNEL_ID);
+                builder.setSmallIcon(R.drawable.humidity2);
+                builder.setContentTitle("Title not");
+                builder.setContentText("test tex");
+                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                NotificationManagerCompat notificationManagerCompat= NotificationManagerCompat.from(this);
+                notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
+
+
+
 
                 toastMessage("Humidity state is low: " + num1);
                 toastMessage("Check the water tank");
@@ -117,6 +142,8 @@ public class ViewDatabase extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+
+
     }
 
     @Override
