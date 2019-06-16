@@ -86,6 +86,7 @@ public class ViewDatabase extends AppCompatActivity {
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             UserInformation uInfo = new UserInformation();
+
             uInfo.sethumidity(ds.child(userID).getValue(UserInformation.class).gethumidity()); //set the humidity
             uInfo.setWaterLevel(ds.child(userID).getValue(UserInformation.class).getWaterLevel()); //set the email
             uInfo.setsystemid(ds.child(userID).getValue(UserInformation.class).getsystemid()); //set the phone_num
