@@ -137,7 +137,7 @@ public class ViewDatabase extends AppCompatActivity {
             ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,array);
             mListView.setAdapter(adapter);
 
-
+//test the end
 
         }
     }
