@@ -1,11 +1,8 @@
 package fikt.zakolokvium.proekt;
 
-import android.app.Notification;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -21,22 +18,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by User on 2/8/2017.
  */
 
 public class ViewDatabase extends AppCompatActivity {
-
-    private NotificationManagerCompat notificationManager;
-
-
-    private final int NOTIFICATION_ID= 1;
-
-
-
-
     private static final String TAG = "ViewDatabase";
 
     //add Firebase Database stuff
@@ -55,15 +42,13 @@ public class ViewDatabase extends AppCompatActivity {
 
         mListView = (ListView) findViewById(R.id.listview);
 
-    notificationManager=NotificationManagerCompat.from(this);
-
         //declare the database reference object. This is what we use to access the database.
         //NOTE: Unless you are signed in, this will not be useable.
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         FirebaseUser user = mAuth.getCurrentUser();
-        userID = Objects.requireNonNull(user).getUid();
+        userID = user.getUid();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -101,55 +86,28 @@ public class ViewDatabase extends AppCompatActivity {
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             UserInformation uInfo = new UserInformation();
-            uInfo.setName(Objects.requireNonNull(Objects.requireNonNull(ds.child(userID).getValue(UserInformation.class))).getName()); //set the name
-            uInfo.setEmail(Objects.requireNonNull(Objects.requireNonNull(ds.child(userID).getValue(UserInformation.class))).getEmail()); //set the email
-            uInfo.setPhone_num(Objects.requireNonNull(Objects.requireNonNull(ds.child(userID).getValue(UserInformation.class))).getPhone_num()); //set the phone_num
+            uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
+            uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
+            uInfo.setPhone_num(ds.child(userID).getValue(UserInformation.class).getPhone_num()); //set the phone_num
 
             //display all the information
-            Log.d(TAG, "showData: Humidity: " + uInfo.getName());
-            Log.d(TAG, "showData: Water Level: " + uInfo.getEmail());
-            Log.d(TAG, "showData: Sensor ID: " + uInfo.getPhone_num());
+            Log.d(TAG, "showData: name: " + uInfo.getName());
+            Log.d(TAG, "showData: email: " + uInfo.getEmail());
+            Log.d(TAG, "showData: phone_num: " + uInfo.getPhone_num());
 
-            ArrayList<String> array = new ArrayList<>();
-            array.add("Humidity:     "+ uInfo.getName()+"%");
-            array.add("Water Level:  "+uInfo.getEmail());
-            array.add("System ID:    "+uInfo.getPhone_num());
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,array);
+            ArrayList<String> array  = new ArrayList<>();
+            array.add(uInfo.getName());
+            array.add(uInfo.getEmail());
+            array.add(uInfo.getPhone_num());
+            ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,array);
             mListView.setAdapter(adapter);
-
-            int num1=Integer.parseInt(uInfo.getName());
-
-            if(num1<30)
-            {
-                notification();
-
-
-                toastMessage("Humidity state is low: " + num1);
-              //  toastMessage("Check the water tank");
-
-            }}
+        }
     }
-
-    private void notification() {
-
-        String CHANNEL_ID = "per_not";
-        Notification notification=new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.humidity2)
-                .setContentTitle("Title")
-                .setContentText("This is it")
-                .build();
-
-        notificationManager.notify(1,notification);
-    }
-
-
 
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-
-
     }
 
     @Override
@@ -167,9 +125,5 @@ public class ViewDatabase extends AppCompatActivity {
      */
     private void toastMessage(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
-
-    public int getNOTIFICATION_ID() {
-        return NOTIFICATION_ID;
     }
 }
