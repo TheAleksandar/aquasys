@@ -25,6 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button buton;
@@ -42,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
     // UI references.
     private EditText mEmail, mPassword;
-    private Button btnSignIn,btnSignOut,btnViewDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
-        btnSignIn = (Button) findViewById(R.id.email_sign_in_button);
-        btnSignOut = (Button) findViewById(R.id.email_sign_out_button);
-        btnViewDatabase = (Button) findViewById(R.id.view_items_screen);
+        Button btnSignIn = (Button) findViewById(R.id.email_sign_in_button);
+        Button btnSignOut = (Button) findViewById(R.id.email_sign_out_button);
+        Button btnViewDatabase = (Button) findViewById(R.id.view_items_screen);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -160,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
+                assert account != null;
+                firebaseAuthWithGoogle(Objects.requireNonNull(account));
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);

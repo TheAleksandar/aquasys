@@ -1,9 +1,6 @@
 package fikt.zakolokvium.proekt;
 
 import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by User on 2/8/2017.
@@ -34,8 +32,7 @@ public class ViewDatabase extends AppCompatActivity {
     private NotificationManagerCompat notificationManager;
 
 
-    private final String CHANNEL_ID="per_not";
-    private final int NOTIFICATION_ID=001;
+    private final int NOTIFICATION_ID= 1;
 
 
 
@@ -66,7 +63,7 @@ public class ViewDatabase extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         FirebaseUser user = mAuth.getCurrentUser();
-        userID = user.getUid();
+        userID = Objects.requireNonNull(user).getUid();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -104,20 +101,20 @@ public class ViewDatabase extends AppCompatActivity {
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             UserInformation uInfo = new UserInformation();
-            uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
-            uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
-            uInfo.setPhone_num(ds.child(userID).getValue(UserInformation.class).getPhone_num()); //set the phone_num
+            uInfo.setName(Objects.requireNonNull(Objects.requireNonNull(ds.child(userID).getValue(UserInformation.class))).getName()); //set the name
+            uInfo.setEmail(Objects.requireNonNull(Objects.requireNonNull(ds.child(userID).getValue(UserInformation.class))).getEmail()); //set the email
+            uInfo.setPhone_num(Objects.requireNonNull(Objects.requireNonNull(ds.child(userID).getValue(UserInformation.class))).getPhone_num()); //set the phone_num
 
             //display all the information
             Log.d(TAG, "showData: Humidity: " + uInfo.getName());
             Log.d(TAG, "showData: Water Level: " + uInfo.getEmail());
             Log.d(TAG, "showData: Sensor ID: " + uInfo.getPhone_num());
 
-            ArrayList<String> array  = new ArrayList<>();
+            ArrayList<String> array = new ArrayList<>();
             array.add("Humidity:     "+ uInfo.getName()+"%");
             array.add("Water Level:  "+uInfo.getEmail());
             array.add("System ID:    "+uInfo.getPhone_num());
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,array);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,array);
             mListView.setAdapter(adapter);
 
             int num1=Integer.parseInt(uInfo.getName());
@@ -135,7 +132,8 @@ public class ViewDatabase extends AppCompatActivity {
 
     private void notification() {
 
-        Notification notification=new NotificationCompat.Builder(this,CHANNEL_ID)
+        String CHANNEL_ID = "per_not";
+        Notification notification=new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.humidity2)
                 .setContentTitle("Title")
                 .setContentText("This is it")
@@ -169,5 +167,9 @@ public class ViewDatabase extends AppCompatActivity {
      */
     private void toastMessage(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    public int getNOTIFICATION_ID() {
+        return NOTIFICATION_ID;
     }
 }

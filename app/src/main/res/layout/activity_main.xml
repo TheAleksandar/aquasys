@@ -6,7 +6,7 @@
     android:orientation="vertical"
 
     tools:context="fikt.zakolokvium.proekt.MainActivity">
-    <ScrollView
+
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -93,10 +93,11 @@
                 android:layout_marginTop="40dp"
                 android:onClick="openSystemGui"
                 android:text="@string/ButtonOpen"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                tools:ignore="OnClick" />
 
 
 
         </LinearLayout>
-    </ScrollView>
+
 </LinearLayout>
