@@ -91,6 +91,19 @@ public class ViewDatabase extends AppCompatActivity {
             uInfo.setWaterLevel(ds.child(userID).getValue(UserInformation.class).getWaterLevel()); //set the email
             uInfo.setsystemid(ds.child(userID).getValue(UserInformation.class).getsystemid()); //set the phone_num
 
+
+            int num1=Integer.parseInt(uInfo.gethumidity());
+            int num2=Integer.parseInt(uInfo.getWaterLevel());
+            if(num1<30)
+            {
+                toastMessage("Humidity state is Low!!!");
+            }
+            if(num2<3)
+            {
+                toastMessage("The Water Thank is low!!!");
+            }
+
+
             //display all the information
             Log.d(TAG, "showData: humidity: " + uInfo.gethumidity());
             Log.d(TAG, "showData: email: " + uInfo.getWaterLevel());
@@ -102,6 +115,9 @@ public class ViewDatabase extends AppCompatActivity {
             array.add("System ID:   "+uInfo.getsystemid());
             ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,array);
             mListView.setAdapter(adapter);
+
+
+
         }
     }
 
