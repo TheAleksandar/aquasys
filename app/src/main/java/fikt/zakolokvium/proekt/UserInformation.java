@@ -6,35 +6,35 @@ package fikt.zakolokvium.proekt;
 
 public class UserInformation {
 
-    private String name;
-    private String email;
-    private String phone_num;
+    private String humidity;
+    private String WaterLevel;
+    private String systemid;
 
     public UserInformation(){
 
     }
 
-    public String getEmail() {
-        return email;
+    public String getWaterLevel() {
+        return WaterLevel;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setWaterLevel(String WaterLevel) {
+        this.WaterLevel = WaterLevel;
     }
 
-    public String getName() {
-        return name;
+    public String gethumidity() {
+        return humidity;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void sethumidity(String humidity) {
+        this.humidity = humidity;
     }
 
-    public String getPhone_num() {
-        return phone_num;
+    public String getsystemid() {
+        return systemid;
     }
 
-    public void setPhone_num(String phone_num) {
-        this.phone_num = phone_num;
+    public void setsystemid(String systemid) {
+        this.systemid = systemid;
     }
 }

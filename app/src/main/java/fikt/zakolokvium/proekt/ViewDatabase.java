@@ -86,19 +86,19 @@ public class ViewDatabase extends AppCompatActivity {
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             UserInformation uInfo = new UserInformation();
-            uInfo.setName(ds.child(userID).getValue(UserInformation.class).getName()); //set the name
-            uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail()); //set the email
-            uInfo.setPhone_num(ds.child(userID).getValue(UserInformation.class).getPhone_num()); //set the phone_num
+            uInfo.sethumidity(ds.child(userID).getValue(UserInformation.class).gethumidity()); //set the humidity
+            uInfo.setWaterLevel(ds.child(userID).getValue(UserInformation.class).getWaterLevel()); //set the email
+            uInfo.setsystemid(ds.child(userID).getValue(UserInformation.class).getsystemid()); //set the phone_num
 
             //display all the information
-            Log.d(TAG, "showData: name: " + uInfo.getName());
-            Log.d(TAG, "showData: email: " + uInfo.getEmail());
-            Log.d(TAG, "showData: phone_num: " + uInfo.getPhone_num());
+            Log.d(TAG, "showData: humidity: " + uInfo.gethumidity());
+            Log.d(TAG, "showData: email: " + uInfo.getWaterLevel());
+            Log.d(TAG, "showData: phone_num: " + uInfo.getsystemid());
 
             ArrayList<String> array  = new ArrayList<>();
-            array.add(uInfo.getName());
-            array.add(uInfo.getEmail());
-            array.add(uInfo.getPhone_num());
+            array.add("Humidity:    "+uInfo.gethumidity());
+            array.add("Water Level: "+uInfo.getWaterLevel());
+            array.add("System ID:   "+uInfo.getsystemid());
             ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,array);
             mListView.setAdapter(adapter);
         }
